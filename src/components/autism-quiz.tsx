@@ -37,9 +37,9 @@ export default function AutismQuiz() {
     return () => window.removeEventListener("resize", updateWindowDimensions)
   }, [])
 
-  const playAudio = async () => {
+  const playAudio = async (ext: string) => {
     try {
-      const audio = new Audio("/applause.mp3")
+      const audio = new Audio(`/${ext}`)
       await audio.play()
     } catch (error) {
       console.error("Error playing audio:", error)
@@ -57,10 +57,11 @@ export default function AutismQuiz() {
     
     setTimeout(() => {
       const newResult = Math.random() < 0.5 ? "YES" : "NO"
+      const newResultBool = Math.random() < 0.5 ? true : false
       setResult(newResult)
       setThinking(null)
       setShowConfetti(true)
-      playAudio()
+      playAudio(newResultBool?"yes.mp3":"no.wav")
       setTimeout(() => setShowConfetti(false), 5000) // Stop confetti after 5 seconds
     }, 2000) // Delay the result by 2 seconds
   }
